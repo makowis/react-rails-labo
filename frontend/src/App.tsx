@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-function App() {
+import { execTest } from "lib/api/test"
+
+
+const App: React.FC = () => {
+  const [message, setMessage] = useState<string>("");
+
+  const handleExecTest = async () => {
+    const res = await execTest();
+
+    if (res.status === 200) {
+      setMessage(res.data.message);
+    }
+  };
+
+  useEffect(() => {
+    handleExecTest()
+  }, [])
+
   return (
-    <h1>Hello World!</h1>
+    <h1>{message} Get From Rails</h1>
   );
 }
 
